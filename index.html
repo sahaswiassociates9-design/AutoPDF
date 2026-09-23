@@ -1,0 +1,790 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Docket Press</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: light;
+    --bg:            #edeee7;
+    --surface:       #ffffff;
+    --surface-2:     #e4e2d3;
+    --border:        #cfcbb6;
+    --text-primary:  #201f1a;
+    --text-secondary:#55524a;
+    --text-muted:    #8b8676;
+    --accent:        #1d4e63;
+    --accent-soft:   #dce8ea;
+    --folder:        #a8763a;
+    --folder-soft:   #f1e3cd;
+    --good:          #2f6b3a;
+    --good-soft:     #e2ecdf;
+    --warning:       #a66a1e;
+    --warning-soft:  #f3e6d3;
+    --critical:      #a23b2e;
+    --critical-soft: #f4e0dc;
+    --shadow: 0 1px 2px rgba(32,31,26,0.05), 0 8px 20px -10px rgba(32,31,26,0.18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg:            #14171a;
+      --surface:       #1c2023;
+      --surface-2:     #262b2b;
+      --border:        #383e3c;
+      --text-primary:  #edeee6;
+      --text-secondary:#b7b9ac;
+      --text-muted:    #82857a;
+      --accent:        #6bb6cc;
+      --accent-soft:   #1c343b;
+      --folder:        #d9a75c;
+      --folder-soft:   #332813;
+      --good:          #79c17e;
+      --good-soft:     #1e2f1f;
+      --warning:       #dda355;
+      --warning-soft:  #332a17;
+      --critical:      #e2897a;
+      --critical-soft: #33201c;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 20px -10px rgba(0,0,0,0.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg:            #14171a;
+    --surface:       #1c2023;
+    --surface-2:     #262b2b;
+    --border:        #383e3c;
+    --text-primary:  #edeee6;
+    --text-secondary:#b7b9ac;
+    --text-muted:    #82857a;
+    --accent:        #6bb6cc;
+    --accent-soft:   #1c343b;
+    --folder:        #d9a75c;
+    --folder-soft:   #332813;
+    --good:          #79c17e;
+    --good-soft:     #1e2f1f;
+    --warning:       #dda355;
+    --warning-soft:  #332a17;
+    --critical:      #e2897a;
+    --critical-soft: #33201c;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 20px -10px rgba(0,0,0,0.5);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+    padding-inline: 16px;
+    padding-block: 28px 100px;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 26px; }
+  h1, h2, h3 { font-family: "Fraunces", Georgia, serif; margin: 0; text-wrap: balance; }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+  button { font: inherit; }
+
+  /* ---- Header ---- */
+  header { display: flex; flex-direction: column; gap: 10px; }
+  .eyebrow {
+    font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--folder); margin: 0;
+  }
+  h1 { font-size: clamp(26px, 4vw, 34px); font-weight: 700; color: var(--text-primary); }
+  .tagline { color: var(--text-secondary); font-size: 14.5px; max-width: 60ch; line-height: 1.5; margin: 0; }
+
+  /* ---- How it works strip ---- */
+  .howitworks {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+    padding: 18px; box-shadow: var(--shadow);
+  }
+  @media (max-width: 620px) { .howitworks { grid-template-columns: 1fr; } }
+  .step { display: flex; gap: 12px; align-items: flex-start; }
+  .step .num {
+    font-family: "Fraunces", serif; font-weight: 600; font-size: 20px; color: var(--accent);
+    background: var(--accent-soft); width: 34px; height: 34px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; flex: none;
+  }
+  .step .label { font-size: 13.5px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+  .step .desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.4; }
+
+  /* ---- Add-bundle action row ---- */
+  .add-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+    border-radius: 9px; padding: 10px 16px; font-size: 13.5px; font-weight: 600;
+    border: 1px solid var(--border); background: var(--surface); color: var(--text-primary);
+    transition: background .12s, border-color .12s, transform .06s;
+  }
+  .btn:hover { border-color: var(--accent); }
+  .btn:active { transform: translateY(1px); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .btn.primary:hover { filter: brightness(1.08); }
+  .btn.primary:disabled, .btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+  .btn.ghost { background: transparent; }
+  .btn.small { padding: 6px 11px; font-size: 12.5px; border-radius: 7px; }
+  .hint-inline { font-size: 12px; color: var(--text-muted); }
+
+  /* ---- Empty state ---- */
+  .empty {
+    border: 1.5px dashed var(--border); border-radius: 14px; padding: 34px 20px;
+    text-align: center; color: var(--text-muted); font-size: 13.5px; background: var(--surface);
+  }
+  .empty b { color: var(--text-secondary); }
+
+  /* ---- Bundle folder card ---- */
+  .bundle { position: relative; margin-top: 14px; }
+  .tab {
+    position: absolute; top: -14px; left: 18px; background: var(--folder); color: #fff;
+    font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+    padding: 4px 12px 5px; border-radius: 7px 7px 0 0;
+  }
+  .folder-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 4px 14px 14px 14px;
+    box-shadow: var(--shadow); padding: 20px 18px 16px; display: flex; flex-direction: column; gap: 14px;
+  }
+  .bundle-head { display: flex; align-items: center; gap: 10px; justify-content: space-between; flex-wrap: wrap; }
+  .name-input {
+    font-family: "Fraunces", serif; font-size: 19px; font-weight: 600; color: var(--text-primary);
+    background: transparent; border: none; border-bottom: 1.5px solid transparent; padding: 2px 2px;
+    min-width: 120px; flex: 1;
+  }
+  .name-input:hover, .name-input:focus { border-bottom-color: var(--border); outline: none; }
+  .bundle-actions { display: flex; gap: 6px; align-items: center; }
+  .icon-btn {
+    border: none; background: transparent; color: var(--text-muted); cursor: pointer;
+    width: 28px; height: 28px; border-radius: 7px; display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+  }
+  .icon-btn:hover { background: var(--surface-2); color: var(--critical); }
+
+  .file-list { display: flex; flex-direction: column; border-top: 1px solid var(--border); }
+  .file-row {
+    display: grid; grid-template-columns: 26px 1fr auto auto; align-items: center; gap: 10px;
+    padding: 8px 2px; border-bottom: 1px solid var(--border);
+  }
+  .file-row.unsupported { opacity: .55; }
+  .file-row .idx { font-size: 12px; color: var(--text-muted); text-align: right; }
+  .file-row .fname { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+  .file-row .fname .strike { text-decoration: line-through; }
+  .file-row .fmeta { font-size: 11px; color: var(--text-muted); }
+  .badge {
+    font-size: 10px; font-weight: 700; letter-spacing: .03em; padding: 2px 7px; border-radius: 100px;
+    text-transform: uppercase; white-space: nowrap;
+  }
+  .badge.img { background: var(--accent-soft); color: var(--accent); }
+  .badge.pdf { background: var(--folder-soft); color: var(--folder); }
+  .badge.bad { background: var(--critical-soft); color: var(--critical); }
+  .file-row .row-actions { display: flex; gap: 2px; }
+  .row-actions button { width: 22px; height: 22px; font-size: 12px; }
+
+  .add-files-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+  .bundle-footer {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+    padding-top: 10px; border-top: 1px solid var(--border);
+  }
+  .status-msg { font-size: 12.5px; display: flex; align-items: center; gap: 7px; }
+  .status-msg.good { color: var(--good); }
+  .status-msg.warn { color: var(--warning); }
+  .status-msg.muted { color: var(--text-muted); }
+  .spinner {
+    width: 13px; height: 13px; border-radius: 50%; border: 2px solid var(--border);
+    border-top-color: var(--accent); animation: spin .7s linear infinite; flex: none;
+  }
+  @media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 1.6s; } }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .skip-list { font-size: 11.5px; color: var(--text-muted); margin: 0; padding-left: 18px; }
+  details.skip-details summary { font-size: 12px; color: var(--warning); cursor: pointer; }
+
+  /* ---- Sticky action bar ---- */
+  .actionbar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+    background: var(--surface); border-top: 1px solid var(--border);
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -8px 20px -12px rgba(0,0,0,.18);
+  }
+  .actionbar-inner {
+    max-width: 860px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; flex-wrap: wrap;
+  }
+  .actionbar .summary { font-size: 12.5px; color: var(--text-muted); }
+  .actionbar .summary b { color: var(--text-primary); }
+  .actionbar .buttons { display: flex; gap: 8px; }
+
+  /* ---- Toast ---- */
+  #toast {
+    position: fixed; left: 50%; bottom: 78px; transform: translate(-50%, 12px); z-index: 30;
+    background: var(--text-primary); color: var(--bg); font-size: 13px; padding: 10px 16px;
+    border-radius: 9px; box-shadow: var(--shadow); opacity: 0; pointer-events: none;
+    transition: opacity .18s, transform .18s; max-width: 90vw; text-align: center;
+  }
+  #toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  input[type="file"] { display: none; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+</style>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Docket Press</p>
+    <h1>Merge case-folder photos and PDFs</h1>
+    <p class="tagline">Pick a folder of subfolders — one per case bundle — or build bundles by hand. Everything is
+      processed right here in your browser: nothing is uploaded anywhere.</p>
+  </header>
+
+  <div class="howitworks" id="howitworks">
+    <div class="step">
+      <span class="num">1</span>
+      <div><div class="label">Add files</div><div class="desc">Upload a folder (one subfolder per bundle) or add files to a bundle you name yourself.</div></div>
+    </div>
+    <div class="step">
+      <span class="num">2</span>
+      <div><div class="label">Check the order</div><div class="desc">Photos are sorted by capture time automatically; nudge any file up or down if needed.</div></div>
+    </div>
+    <div class="step">
+      <span class="num">3</span>
+      <div><div class="label">Build &amp; save</div><div class="desc">Each bundle becomes one PDF — images and existing PDFs merged in order — saved to your device.</div></div>
+    </div>
+  </div>
+
+  <div class="add-row">
+    <button class="btn primary" id="btn-upload-folder">📁 Upload a folder</button>
+    <button class="btn" id="btn-new-bundle">+ New bundle</button>
+    <span class="hint-inline" id="folder-hint">Folder upload groups files by their immediate subfolder automatically.</span>
+  </div>
+
+  <input type="file" id="folder-input" webkitdirectory multiple>
+  <input type="file" id="manual-file-input" multiple accept=".jpg,.jpeg,.png,.webp,.pdf,image/*,application/pdf">
+
+  <div id="bundles"></div>
+  <div class="empty" id="empty-state">No bundles yet — <b>upload a folder</b> above, or start one with <b>+ New bundle</b>.</div>
+
+</div>
+
+<div class="actionbar">
+  <div class="actionbar-inner">
+    <div class="summary" id="ab-summary">0 bundles</div>
+    <div class="buttons">
+      <button class="btn" id="btn-download-zip" disabled>Download all (.zip)</button>
+      <button class="btn primary" id="btn-build-all" disabled>Build all bundles</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.2/jszip.min.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  // ------------------------------------------------------------------
+  // Sorting: read a capture-time timestamp out of WhatsApp-style photo
+  // filenames ("...at 2.09.21 PM..."), or a scanner-app document
+  // filename ("New Doc 09-18-2026 12.13.pdf"), falling back to the
+  // file's own last-modified time. Mirrors the ordering used by the
+  // command-line version of this tool so results match either way.
+  // ------------------------------------------------------------------
+  var WHATSAPP_TIME_RE = /at (\d{1,2})\.(\d{2})\.(\d{2})\s*(AM|PM)?(?:\s*\((\d+)\))?/i;
+  var SCANNER_DOC_RE = /(\d{2})-(\d{2})-(\d{4})\s+(\d{1,2})\.(\d{2})/;
+
+  function sortKey(file) {
+    var title = file.name;
+    var m = WHATSAPP_TIME_RE.exec(title);
+    if (m) {
+      var h = parseInt(m[1], 10), mi = parseInt(m[2], 10), s = parseInt(m[3], 10);
+      var ampm = m[4] ? m[4].toUpperCase() : null;
+      if (ampm === "PM" && h !== 12) h += 12;
+      if (ampm === "AM" && h === 12) h = 0;
+      var dup = m[5] ? parseInt(m[5], 10) : 0;
+      return [0, h, mi, s, dup, title];
+    }
+    m = SCANNER_DOC_RE.exec(title);
+    if (m) {
+      var dt = new Date(parseInt(m[3], 10), parseInt(m[1], 10) - 1, parseInt(m[2], 10), parseInt(m[4], 10), parseInt(m[5], 10)).getTime();
+      return [1, dt, title];
+    }
+    return [2, file.lastModified || 0, title];
+  }
+
+  function compareKeys(a, b) {
+    var len = Math.max(a.length, b.length);
+    for (var i = 0; i < len; i++) {
+      var av = a[i], bv = b[i];
+      if (av === undefined) return -1;
+      if (bv === undefined) return 1;
+      if (av < bv) return -1;
+      if (av > bv) return 1;
+    }
+    return 0;
+  }
+
+  function classify(file) {
+    var name = file.name.toLowerCase();
+    var type = (file.type || "").toLowerCase();
+    if (type === "application/pdf" || /\.pdf$/.test(name)) return "pdf";
+    if (type.indexOf("image/jpeg") === 0 || type.indexOf("image/png") === 0 || type.indexOf("image/webp") === 0 || /\.(jpe?g|png|webp)$/.test(name)) return "image";
+    return "unsupported";
+  }
+
+  function fmtSize(bytes) {
+    if (bytes < 1024) return bytes + " B";
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(0) + " KB";
+    return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+  }
+
+  function sanitizeFilename(name) {
+    var cleaned = (name || "bundle").replace(/[<>:"/\\|?*]/g, "").trim();
+    return cleaned || "bundle";
+  }
+
+  // ------------------------------------------------------------------
+  // State
+  // ------------------------------------------------------------------
+  var bundles = [];
+  var idCounter = 1;
+  function nextId() { return "id" + (idCounter++); }
+
+  function addBundle(name, fileList) {
+    var items = (fileList || []).map(function (f) { return { id: nextId(), file: f, kind: classify(f) }; });
+    items.sort(function (a, b) { return compareKeys(sortKey(a.file), sortKey(b.file)); });
+    bundles.push({ id: nextId(), name: name, items: items, result: null, merging: false });
+    render();
+  }
+
+  function addFilesToBundle(bundle, fileList) {
+    var items = Array.prototype.map.call(fileList, function (f) { return { id: nextId(), file: f, kind: classify(f) }; });
+    items.sort(function (a, b) { return compareKeys(sortKey(a.file), sortKey(b.file)); });
+    bundle.items = bundle.items.concat(items);
+    bundle.result = null;
+    render();
+  }
+
+  function moveItem(bundle, idx, dir) {
+    var j = idx + dir;
+    if (j < 0 || j >= bundle.items.length) return;
+    var tmp = bundle.items[idx];
+    bundle.items[idx] = bundle.items[j];
+    bundle.items[j] = tmp;
+    bundle.result = null;
+    render();
+  }
+
+  function removeItem(bundle, idx) {
+    bundle.items.splice(idx, 1);
+    bundle.result = null;
+    render();
+  }
+
+  function removeBundle(id) {
+    bundles = bundles.filter(function (b) { return b.id !== id; });
+    render();
+  }
+
+  // ------------------------------------------------------------------
+  // Merge pipeline (pdf-lib) — the same "photos become pages, existing
+  // PDFs are spliced in by page" approach as the desktop version.
+  // ------------------------------------------------------------------
+  function loadBitmap(file) {
+    return createImageBitmap(file, { imageOrientation: "from-image" }).catch(function () {
+      return createImageBitmap(file);
+    });
+  }
+
+  function canvasToJpegBytes(bitmap) {
+    return new Promise(function (resolve, reject) {
+      var canvas = document.createElement("canvas");
+      canvas.width = bitmap.width;
+      canvas.height = bitmap.height;
+      var ctx = canvas.getContext("2d");
+      ctx.drawImage(bitmap, 0, 0);
+      canvas.toBlob(function (blob) {
+        if (!blob) { reject(new Error("could not encode image")); return; }
+        blob.arrayBuffer().then(function (buf) { resolve(new Uint8Array(buf)); }).catch(reject);
+      }, "image/jpeg", 0.92);
+    });
+  }
+
+  async function mergeBundle(items) {
+    var skipped = [];
+    var included = [];
+    var supported = [];
+    items.forEach(function (it) {
+      if (it.kind === "unsupported") skipped.push([it.file.name, "unsupported file type"]);
+      else supported.push(it);
+    });
+    if (supported.length === 0) {
+      return { blob: null, pages: 0, included: included, skipped: skipped };
+    }
+
+    var outDoc = await PDFLib.PDFDocument.create();
+
+    for (var i = 0; i < supported.length; i++) {
+      var item = supported[i];
+      try {
+        if (item.kind === "image") {
+          var bitmap = await loadBitmap(item.file);
+          var jpegBytes = await canvasToJpegBytes(bitmap);
+          var jpg = await outDoc.embedJpg(jpegBytes);
+          var page = outDoc.addPage([jpg.width, jpg.height]);
+          page.drawImage(jpg, { x: 0, y: 0, width: jpg.width, height: jpg.height });
+          included.push(item.file.name);
+        } else {
+          var bytes = new Uint8Array(await item.file.arrayBuffer());
+          var srcDoc = await PDFLib.PDFDocument.load(bytes, { ignoreEncryption: true });
+          var idxs = srcDoc.getPageIndices();
+          var copied = await outDoc.copyPages(srcDoc, idxs);
+          copied.forEach(function (p) { outDoc.addPage(p); });
+          included.push(item.file.name);
+        }
+      } catch (err) {
+        skipped.push([item.file.name, (err && err.message) ? err.message : String(err)]);
+      }
+    }
+
+    var pages = outDoc.getPageCount();
+    if (pages === 0) {
+      return { blob: null, pages: 0, included: included, skipped: skipped };
+    }
+    var pdfBytes = await outDoc.save();
+    return { blob: new Blob([pdfBytes], { type: "application/pdf" }), pages: pages, included: included, skipped: skipped };
+  }
+
+  async function buildBundle(bundle) {
+    bundle.merging = true;
+    render();
+    try {
+      bundle.result = await mergeBundle(bundle.items);
+      bundle.result.error = null;
+    } catch (err) {
+      var msg = (err && err.message) || String(err);
+      if (typeof PDFLib === "undefined") msg = "the PDF library didn't load (check your connection or an ad-blocker) — " + msg;
+      bundle.result = { blob: null, pages: 0, included: [], skipped: [], error: msg };
+    }
+    bundle.merging = false;
+    render();
+  }
+
+  async function buildAll() {
+    for (var i = 0; i < bundles.length; i++) {
+      if (bundles[i].items.length === 0) continue;
+      await buildBundle(bundles[i]);
+    }
+  }
+
+  // ------------------------------------------------------------------
+  // Downloads capability
+  // ------------------------------------------------------------------
+  var downloadsApi = null;
+  if (window.claude && typeof window.claude.use === "function") {
+    window.claude.use("downloads").then(function (api) {
+      downloadsApi = api;
+      render();
+    }).catch(function () {});
+  }
+
+  function fallbackDownload(blob, filename) {
+    // Standard browser download fallback (works in most browsers/WebViews)
+    try {
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      a.style.display = "none";
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function () {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 2000);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  async function downloadBundle(bundle) {
+    if (!bundle.result || !bundle.result.blob) return;
+    var filename = sanitizeFilename(bundle.name) + ".pdf";
+    // Try the claude downloads API first
+    if (downloadsApi) {
+      try {
+        await downloadsApi.save({ filename: filename, data: bundle.result.blob });
+        return;
+      } catch (err) {
+        if (err && err.code === "declined") return;
+        // Fall through to fallback
+      }
+    }
+    // Fallback: standard browser anchor-click download
+    if (!fallbackDownload(bundle.result.blob, filename)) {
+      showToast("Download not supported in this view — try opening the page in your browser.");
+    }
+  }
+
+  async function downloadAllZip() {
+    var ready = bundles.filter(function (b) { return b.result && b.result.blob; });
+    if (ready.length === 0) return;
+    if (typeof JSZip === "undefined") { showToast("Could not load the zip library."); return; }
+    var zip = new JSZip();
+    var used = {};
+    ready.forEach(function (b) {
+      var base = sanitizeFilename(b.name);
+      var name = base;
+      var n = 1;
+      while (used[name]) { name = base + " (" + (++n) + ")"; }
+      used[name] = true;
+      zip.file(name + ".pdf", b.result.blob);
+    });
+    var zipBlob;
+    try {
+      zipBlob = await zip.generateAsync({ type: "blob" });
+    } catch (err) {
+      showToast("Couldn't create the zip" + (err && err.message ? ": " + err.message : "."));
+      return;
+    }
+    if (downloadsApi) {
+      try {
+        await downloadsApi.save({ filename: "merged-bundles.zip", data: zipBlob });
+        return;
+      } catch (err) {
+        if (err && err.code === "declined") return;
+        // Fall through to fallback
+      }
+    }
+    if (!fallbackDownload(zipBlob, "merged-bundles.zip")) {
+      showToast("Download not supported in this view — try opening the page in your browser.");
+    }
+  }
+
+  var toastTimer = null;
+  function showToast(msg) {
+    var el = document.getElementById("toast");
+    el.textContent = msg;
+    el.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove("show"); }, 3600);
+  }
+
+  // ------------------------------------------------------------------
+  // Rendering
+  // ------------------------------------------------------------------
+  function fileRowHtml(bundle, item, idx, total) {
+    var badgeClass = item.kind === "image" ? "img" : (item.kind === "pdf" ? "pdf" : "bad");
+    var badgeLabel = item.kind === "image" ? "IMG" : (item.kind === "pdf" ? "PDF" : "SKIP");
+    var nameHtml = item.kind === "unsupported"
+      ? '<span class="strike">' + escapeHtml(item.file.name) + "</span>"
+      : escapeHtml(item.file.name);
+    return (
+      '<div class="file-row' + (item.kind === "unsupported" ? " unsupported" : "") + '" data-bundle="' + bundle.id + '" data-idx="' + idx + '">' +
+        '<span class="idx mono">' + (idx + 1) + "</span>" +
+        '<span class="fname" title="' + escapeHtml(item.file.name) + '">' + nameHtml + "</span>" +
+        '<span class="fmeta mono">' + fmtSize(item.file.size) + "</span>" +
+        '<span class="row-actions">' +
+          '<button class="icon-btn btn-up" ' + (idx === 0 ? "disabled" : "") + ' title="Move up">↑</button>' +
+          '<button class="icon-btn btn-down" ' + (idx === total - 1 ? "disabled" : "") + ' title="Move down">↓</button>' +
+          '<button class="icon-btn btn-remove" title="Remove">×</button>' +
+          '<span class="badge ' + badgeClass + '">' + badgeLabel + "</span>" +
+        "</span>" +
+      "</div>"
+    );
+  }
+
+  function statusHtml(bundle) {
+    if (bundle.merging) {
+      return '<span class="status-msg muted"><span class="spinner"></span>Building…</span>';
+    }
+    if (!bundle.result) {
+      var n = bundle.items.filter(function (i) { return i.kind !== "unsupported"; }).length;
+      return '<span class="status-msg muted">' + n + " file" + (n === 1 ? "" : "s") + " ready to build</span>";
+    }
+    if (bundle.result.error) {
+      return '<span class="status-msg warn">⚠ Couldn\'t build this bundle — ' + escapeHtml(bundle.result.error) + "</span>";
+    }
+    if (!bundle.result.blob) {
+      return '<span class="status-msg warn">No mergeable files in this bundle</span>';
+    }
+    var skipNote = "";
+    if (bundle.result.skipped.length) {
+      skipNote = '<details class="skip-details"><summary>' + bundle.result.skipped.length + " skipped</summary>" +
+        '<ul class="skip-list">' + bundle.result.skipped.map(function (s) {
+          return "<li>" + escapeHtml(s[0]) + " — " + escapeHtml(s[1]) + "</li>";
+        }).join("") + "</ul></details>";
+    }
+    return '<span class="status-msg good">✓ ' + bundle.result.pages + " page" + (bundle.result.pages === 1 ? "" : "s") + " · " + bundle.result.included.length + " files merged</span>" + skipNote;
+  }
+
+  function bundleHtml(bundle) {
+    var rows = bundle.items.map(function (it, idx) { return fileRowHtml(bundle, it, idx, bundle.items.length); }).join("");
+    var downloadDisabled = !(bundle.result && bundle.result.blob);
+    return (
+      '<div class="bundle" data-bundle-wrap="' + bundle.id + '">' +
+        '<span class="tab">Case bundle</span>' +
+        '<div class="folder-card">' +
+          '<div class="bundle-head">' +
+            '<input class="name-input" data-bundle="' + bundle.id + '" value="' + escapeAttr(bundle.name) + '" aria-label="Bundle name">' +
+            '<div class="bundle-actions">' +
+              '<button class="btn small add-files-btn" data-bundle="' + bundle.id + '">+ Add files</button>' +
+              '<button class="icon-btn remove-bundle-btn" data-bundle="' + bundle.id + '" title="Remove bundle">🗑</button>' +
+            "</div>" +
+          "</div>" +
+          '<div class="file-list">' + (rows || '<p class="hint-inline" style="padding:10px 2px;">No files yet — click “Add files.”</p>') + "</div>" +
+          '<div class="bundle-footer">' +
+            statusHtml(bundle) +
+            '<div style="display:flex; gap:8px;">' +
+              '<button class="btn small build-btn" data-bundle="' + bundle.id + '" ' + (bundle.items.length === 0 || bundle.merging ? "disabled" : "") + ">Build PDF</button>" +
+              '<button class="btn small primary download-btn" data-bundle="' + bundle.id + '" ' + (downloadDisabled ? "disabled" : "") + ">Download</button>" +
+            "</div>" +
+          "</div>" +
+        "</div>" +
+      "</div>"
+    );
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function escapeAttr(s) { return escapeHtml(s); }
+
+  function render() {
+    var container = document.getElementById("bundles");
+    var empty = document.getElementById("empty-state");
+    var howitworks = document.getElementById("howitworks");
+
+    if (bundles.length === 0) {
+      container.innerHTML = "";
+      empty.style.display = "";
+      howitworks.style.display = "";
+    } else {
+      empty.style.display = "none";
+      howitworks.style.display = "none";
+      container.innerHTML = bundles.map(bundleHtml).join("");
+    }
+
+    var totalFiles = bundles.reduce(function (n, b) { return n + b.items.filter(function (i) { return i.kind !== "unsupported"; }).length; }, 0);
+    var builtCount = bundles.filter(function (b) { return b.result && b.result.blob; }).length;
+    document.getElementById("ab-summary").innerHTML =
+      "<b>" + bundles.length + "</b> bundle" + (bundles.length === 1 ? "" : "s") +
+      " · <b>" + totalFiles + "</b> file" + (totalFiles === 1 ? "" : "s") +
+      (builtCount ? " · <b>" + builtCount + "</b> built" : "");
+
+    var anyBuildable = bundles.some(function (b) { return b.items.length > 0; });
+    document.getElementById("btn-build-all").disabled = !anyBuildable;
+    document.getElementById("btn-download-zip").disabled = builtCount < 1;
+
+    wireBundleEvents();
+  }
+
+  function wireBundleEvents() {
+    document.querySelectorAll(".name-input").forEach(function (el) {
+      el.oninput = function () {
+        var b = bundles.find(function (x) { return x.id === el.dataset.bundle; });
+        if (b) b.name = el.value;
+      };
+    });
+    document.querySelectorAll(".btn-up").forEach(function (el) {
+      el.onclick = function () {
+        var row = el.closest(".file-row");
+        var b = bundles.find(function (x) { return x.id === row.dataset.bundle; });
+        moveItem(b, parseInt(row.dataset.idx, 10), -1);
+      };
+    });
+    document.querySelectorAll(".btn-down").forEach(function (el) {
+      el.onclick = function () {
+        var row = el.closest(".file-row");
+        var b = bundles.find(function (x) { return x.id === row.dataset.bundle; });
+        moveItem(b, parseInt(row.dataset.idx, 10), 1);
+      };
+    });
+    document.querySelectorAll(".btn-remove").forEach(function (el) {
+      el.onclick = function () {
+        var row = el.closest(".file-row");
+        var b = bundles.find(function (x) { return x.id === row.dataset.bundle; });
+        removeItem(b, parseInt(row.dataset.idx, 10));
+      };
+    });
+    document.querySelectorAll(".add-files-btn").forEach(function (el) {
+      el.onclick = function () {
+        pendingBundleId = el.dataset.bundle;
+        document.getElementById("manual-file-input").click();
+      };
+    });
+    document.querySelectorAll(".remove-bundle-btn").forEach(function (el) {
+      el.onclick = function () { removeBundle(el.dataset.bundle); };
+    });
+    document.querySelectorAll(".build-btn").forEach(function (el) {
+      el.onclick = function () {
+        var b = bundles.find(function (x) { return x.id === el.dataset.bundle; });
+        if (b) buildBundle(b);
+      };
+    });
+    document.querySelectorAll(".download-btn").forEach(function (el) {
+      el.onclick = function () {
+        var b = bundles.find(function (x) { return x.id === el.dataset.bundle; });
+        if (b) downloadBundle(b);
+      };
+    });
+  }
+
+  // ------------------------------------------------------------------
+  // Top-level controls
+  // ------------------------------------------------------------------
+  var pendingBundleId = null;
+
+  document.getElementById("btn-upload-folder").onclick = function () {
+    document.getElementById("folder-input").click();
+  };
+  document.getElementById("btn-new-bundle").onclick = function () {
+    addBundle("New bundle " + bundles.length, []);
+  };
+  document.getElementById("btn-build-all").onclick = function () { buildAll(); };
+  document.getElementById("btn-download-zip").onclick = function () { downloadAllZip(); };
+
+  document.getElementById("folder-input").addEventListener("change", function (e) {
+    var files = Array.prototype.slice.call(e.target.files);
+    var groups = {};
+    var order = [];
+    var rootCount = 0;
+    files.forEach(function (f) {
+      var rel = f.webkitRelativePath || f.name;
+      var parts = rel.split("/");
+      if (parts.length >= 3) {
+        var sub = parts[1];
+        if (!groups[sub]) { groups[sub] = []; order.push(sub); }
+        groups[sub].push(f);
+      } else {
+        rootCount++;
+      }
+    });
+    order.forEach(function (name) { addBundle(name, groups[name]); });
+    if (rootCount > 0) {
+      showToast(rootCount + " file(s) directly in the picked folder (not inside a subfolder) were left out — put them in a subfolder to include them.");
+    }
+    if (order.length === 0 && rootCount === 0) {
+      showToast("That folder looks empty.");
+    }
+    e.target.value = "";
+  });
+
+  document.getElementById("manual-file-input").addEventListener("change", function (e) {
+    var files = e.target.files;
+    if (pendingBundleId && files.length) {
+      var b = bundles.find(function (x) { return x.id === pendingBundleId; });
+      if (b) addFilesToBundle(b, files);
+    }
+    pendingBundleId = null;
+    e.target.value = "";
+  });
+
+  render();
+})();
+</script>
+
+</body></html>
